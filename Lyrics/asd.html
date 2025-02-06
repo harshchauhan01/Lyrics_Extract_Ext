@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Floating Overlay on Every Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Style for the floating overlay */
+    #floating-overlay {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 300px;
+      height: 200px;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 9999;  /* Ensure it's on top */
+      display: none;  /* Initially hidden */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Style for the toggle button */
+    #toggleOverlayButton {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 10000;  /* Ensure button is above overlay */
+    }
+
+    #toggleOverlayButton:hover {
+      background-color: darkgreen;
+    }
+
+    /* Close button inside the overlay */
+    #closeButton {
+      margin-top: 10px;
+      padding: 5px;
+      background-color: red;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Overlay -->
+  <div id="floating-overlay">
+    <h2>Floating Overlay</h2>
+    <p>This is a persistent floating overlay that shows on all pages until closed.</p>
+    <button id="closeButton">Close</button>
+  </div>
+
+  <!-- Button to toggle the overlay -->
+  <button id="toggleOverlayButton">Toggle Overlay</button>
+
+  <script>
+    // Get the overlay and button elements
+    const overlay = document.getElementById('floating-overlay');
+    const toggleButton = document.getElementById('toggleOverlayButton');
+    const closeButton = document.getElementById('closeButton');
+
+    // Check localStorage to determine if the overlay should be shown
+    if (localStorage.getItem('overlayVisible') === 'true') {
+      overlay.style.display = 'flex';  // Show overlay if the flag is true
+    }
+
+    // Function to toggle the visibility of the overlay
+    function toggleOverlay() {
+      if (overlay.style.display === 'none' || overlay.style.display === '') {
+        overlay.style.display = 'flex';  // Show overlay
+        localStorage.setItem('overlayVisible', 'true');  // Store state in localStorage
+      } else {
+        overlay.style.display = 'none';  // Hide overlay
+        localStorage.setItem('overlayVisible', 'false');  // Update state in localStorage
+      }
+    }
+
+    // Function to close the overlay when the close button is clicked
+    closeButton.addEventListener('click', function() {
+      overlay.style.display = 'none';
+      localStorage.setItem('overlayVisible', 'false');  // Update state in localStorage
+    });
+
+    // Add event listener to toggle the overlay on button click
+    toggleButton.addEventListener('click', toggleOverlay);
+  </script>
+</body>
+</html>

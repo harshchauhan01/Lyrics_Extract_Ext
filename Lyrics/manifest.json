@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Lyrics Extractor",
+    "version": "0.0.1",
+    "permissions": ["activeTab"],
+    "action": {
+      "default_popup": "popup.html"
+    }
+}
+  
